@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Support Me with a Steam Gift Card</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #020617, #020617 40%, #020617 60%, #020617);
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .glow {
+            position: fixed;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(56,189,248,0.25), transparent 60%);
+            top: -80px;
+            right: -40px;
+            pointer-events: none;
+            filter: blur(2px);
+        }
+
+        .glow2 {
+            position: fixed;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(34,197,94,0.25), transparent 60%);
+            bottom: -120px;
+            left: -60px;
+            pointer-events: none;
+            filter: blur(2px);
+        }
+
+        .card {
+            position: relative;
+            background: rgba(15, 23, 42, 0.96);
+            border-radius: 22px;
+            padding: 26px 26px 22px;
+            width: 520px;
+            max-width: 100%;
+            border: 1px solid rgba(148,163,184,0.25);
+            box-shadow: 0 24px 70px rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            padding: 4px 12px;
+            border-radius: 999px;
+            background: rgba(34,197,94,0.12);
+            color: #bbf7d0;
+            border: 1px solid rgba(34,197,94,0.4);
+            margin-bottom: 8px;
+        }
+
+        .tag-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 8px rgba(34,197,94,0.9);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #f9fafb;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .steps {
+            background: #020617;
+            border-radius: 16px;
+            padding: 12px 14px;
+            border: 1px solid #1e293b;
+            margin-bottom: 18px;
+        }
+
+        .steps-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 6px 0;
+            color: #e5e7eb;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            margin: 8px 0 4px;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        ol {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        ol li {
+            margin-bottom: 3px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #e5e7eb;
+        }
+
+        .code-input {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .code-input input {
+            flex: 1;
+            padding: 9px 10px;
+            border-radius: 10px;
+            border: 1px solid #475569;
+            background: #020617;
+            color: #e2e8f0;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .code-input input::placeholder {
+            color: #64748b;
+        }
+
+        .hint {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 11px 0;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            color: #022c22;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: transform 0.08s, box-shadow 0.12s, opacity 0.12s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.7);
+            opacity: 0.97;
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .note {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .highlight {
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        .footer {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #64748b;
+            text-align: center;
+        }
+
+        /* Success overlay */
+        .success-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,0.92);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease-out;
+            z-index: 20;
+        }
+
+        .success-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .success-box {
+            background: #020617;
+            border-radius: 18px;
+            padding: 22px 24px 18px;
+            border: 1px solid #22c55e;
+            text-align: center;
+            width: 320px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 999px;
+            border: 2px solid #22c55e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            color: #bbf7d0;
+            font-size: 26px;
+            animation: pop 0.4s ease-out;
+            box-shadow: 0 0 18px rgba(34,197,94,0.7);
+        }
+
+        .success-title {
+            font-size: 18px;
+            color: #f9fafb;
+            margin-bottom: 4px;
+        }
+
+        .success-text {
+            font-size: 12px;
+            color: #cbd5e1;
+        }
+
+        .success-sub {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .success-close {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #22c55e;
+            cursor: pointer;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 6px;
+            height: 10px;
+            background: #22c55e;
+            top: -10px;
+            border-radius: 2px;
+            opacity: 0;
+            animation: confetti-fall 1.2s linear forwards;
+            z-index: 15;
+        }
+
+        .confetti:nth-child(3n) { background: #38bdf8; }
+        .confetti:nth-child(4n) { background: #facc15; }
+        .confetti:nth-child(5n) { background: #f97316; }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.4); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow"></div>
+    <div class="glow2"></div>
+
+    <div class="card">
+        <div class="header">
+            <div class="tag">
+                <span class="tag-dot"></span>
+                SUPPORT MY GAMING
+            </div>
+            <h1>Donate with a Steam Gift Card</h1>
+            <div class="subtitle">
+                Buy a Steam gift card, paste the code, hit donate—your email opens with everything ready.
+            </div>
+        </div>
+
+        <div class="steps">
+            <p class="steps-title">How to donate (step by step)</p>
+
+            <p class="section-title">1. Buy a Steam gift card</p>
+            <ol>
+                <li>Go to a trusted store (game shop, supermarket, electronics store) or an official online shop.</li>
+                <li>Ask for a <strong>Steam Gift Card</strong> or choose a digital Steam gift card.</li>
+                <li>Pick any amount you like (5, 10, 20, 50, etc.).</li>
+                <li>Complete the purchase and keep the card or email safe.</li>
+            </ol>
+
+            <p class="section-title">2. Reveal the code</p>
+            <ol>
+                <li>Scratch the silver/grey area on the back of the physical card, or</li>
+                <li>Check your email/account if it’s a digital card.</li>
+                <li>Find the full Steam code (usually 15–20 characters).</li>
+            </ol>
+
+            <p class="section-title">3. Send the code</p>
+            <ol>
+                <li>Type the code in the boxes below (format like <strong>XXXX-XXXX-XXXX-XXXX</strong>).</li>
+                <li>Click <strong>Donate!</strong>.</li>
+                <li>Your email app opens with the code and my email filled in.</li>
+                <li>Press <strong>Send</strong> to finish the donation.</li>
+            </ol>
+        </div>
+
+        <label for="code1">Steam gift card code</label>
+        <div class="code-input">
+            <input id="code1" maxlength="4" placeholder="ABCD">
+            <input id="code2" maxlength="4" placeholder="EFGH">
+            <input id="code3" maxlength="4" placeholder="IJKL">
+            <input id="code4" maxlength="4" placeholder="MNOP">
+        </div>
+        <div class="hint">
+            Use letters and numbers only. I’ll combine them as <span class="highlight">XXXX-XXXX-XXXX-XXXX</span>.
+        </div>
+
+        <button class="btn" onclick="handleDonate()">Donate!</button>
+
+        <div class="note">
+            Your email will be addressed to <span class="highlight">dandusnehith9@gmail.com</span>.
+        </div>
+
+        <div class="footer">
+            Thanks for supporting my games and projects. You’re a legend. 💚
+        </div>
+    </div>
+
+    <!-- Success overlay -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-box">
+            <div class="success-icon">✔</div>
+            <div class="success-title">Donation Ready!</div>
+            <div class="success-text">
+                Your email app should now be open with the Steam code filled in.
+            </div>
+            <div class="success-sub">
+                Just hit <strong>Send</strong> in your email to complete the donation.
+            </div>
+            <div class="success-close" onclick="closeSuccess()">Close</div>
+        </div>
+    </div>
+
+    <script>
+        function handleDonate() {
+            const p1 = document.getElementById('code1').value.trim().toUpperCase();
+            const p2 = document.getElementById('code2').value.trim().toUpperCase();
+            const p3 = document.getElementById('code3').value.trim().toUpperCase();
+            const p4 = document.getElementById('code4').value.trim().toUpperCase();
+
+            const parts = [p1, p2, p3, p4];
+
+            // Basic validation: all filled, alphanumeric, length 4 each
+            for (let i = 0; i < parts.length; i++) {
+                if (parts[i].length !== 4 || !/^[A-Z0-9]+$/.test(parts[i])) {
+                    alert("Please enter a valid Steam code in the format XXXX-XXXX-XXXX-XXXX (letters and numbers only).");
+                    return;
+                }
+            }
+
+            const fullCode = `${p1}-${p2}-${p3}-${p4}`;
+
+            triggerConfetti();
+            showSuccessOverlay();
+            sendMail(fullCode);
+        }
+
+        function sendMail(code) {
+            const email = "dandusnehith9@gmail.com";
+            const subject = encodeURIComponent("Steam Gift Card Donation");
+            const body = encodeURIComponent(
+`Hi,
+
+Here is my Steam gift card code donation:
+
+${code}
+
+Thank you!`
+            );
+
+            window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+        }
+
+        function showSuccessOverlay() {
+            const overlay = document.getElementById('successOverlay');
+            overlay.classList.add('show');
+            setTimeout(() => overlay.classList.remove('show'), 3500);
+        }
+
+        function closeSuccess() {
+            document.getElementById('successOverlay').classList.remove('show');
+        }
+
+        function triggerConfetti() {
+            for (let i = 0; i < 40; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.left = Math.random() * 100 + 'vw';
+                c.style.animationDelay = (Math.random() * 0.4) + 's';
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 1500);
+            }
+        }
+    </script>
+</body>
+</html>
